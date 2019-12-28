@@ -1,6 +1,6 @@
 ---
 title: JavaScript 102
-date: "2016-12-19 16:45"
+date: '2016-12-19 16:45'
 ---
 
 JavaScript is essential to companies using `Node.js`. It's THE language of year 2016. However, it is also a fragile language could be easily abused.
@@ -10,6 +10,7 @@ JavaScript is essential to companies using `Node.js`. It's THE language of year 
 In this article, I am going to demonstrate some best practices in JavaScript with examples.
 
 ## `sum` function
+
 To begin with, we are required to write a simple sum function. Here is the requirement:
 
 1. the function accepts **1** argument - an array of numbers
@@ -17,14 +18,14 @@ To begin with, we are required to write a simple sum function. Here is the requi
 
 ### for loop (not recommended)
 
-``` javascript
+```javascript
 // array = [1,2,3,4]
 function sum(array) {
-  let result = 0;
+  let result = 0
   for (var i = 0; i < array.length; i++) {
-    result += array[i];
+    result += array[i]
   }
-  return result;
+  return result
 }
 ```
 
@@ -40,28 +41,28 @@ an astonishing fact is that a lot of programmers from other languages really lov
 
 Here is the reason:
 
->  The for-in statement by itself is not a "bad practice", however it can be mis-used, for example, to iterate over arrays or array-like objects.
+> The for-in statement by itself is not a "bad practice", however it can be mis-used, for example, to iterate over arrays or array-like objects.
 
 > The purpose of the for-in statement is to enumerate over object properties. This statement will go up in the prototype chain, also enumerating over inherited properties, a thing that sometimes is not desired.
 
 > Also, the order of iteration is not guaranteed by the spec., meaning that if you want to "iterate" an array object, with this statement you cannot be sure that the properties (array indexes) will be visited in the numeric order.
 
-``` javascript
+```javascript
 // array = [1,2,3,4]
 function sum(array) {
-  let result = 0;
+  let result = 0
   for (let index in array) {
     if (array.hasOwnProperty(index)) {
-      result += array[index];
+      result += array[index]
     }
   }
-  return result;
+  return result
 }
 ```
 
 If one should iterate over every property in an `object` (`{}`) rather than `array` (`[]`), consider use those methods:
 
-``` javascript
+```javascript
 Object.keys           <-> _.keys
 Object.values  (es7)  <-> _.values
 Object.entries (es7)  <-> _.pairs
@@ -71,14 +72,14 @@ Those methods are not following the prototype chain to do an exhaustive search s
 
 ### for ... of loop (es6) (Okay.. not the best)
 
-``` javascript
+```javascript
 // array = [1,2,3,4]
 function sum(array) {
-  let result = 0;
+  let result = 0
   for (let number of array) {
-    result += number;
+    result += number
   }
-  return result;
+  return result
 }
 ```
 
@@ -88,26 +89,25 @@ this is a more recommended way to iterate a collection (or iterable to be precis
 
 ### Array.prototype.forEach (Okay, not the best)
 
-``` javascript
+```javascript
 // array = [1,2,3,4]
 function sum(array) {
-  let result = 0;
-  array.forEach(number => result += number);
-  return result;
+  let result = 0
+  array.forEach(number => (result += number))
+  return result
 }
 ```
 
 Nothing wrong about it, but we still need a `result` tmp var.
 
-
 ### Array.prototype.reduce (better)
 
-``` javascript
+```javascript
 // array = [1,2,3,4]
 function sum(array) {
   return array.reduce((pre, cur) => {
-    return pre + cur;
-  });
+    return pre + cur
+  })
 }
 ```
 
@@ -119,13 +119,12 @@ Remember, you MUST return the accumulated result in the reducer function
 
 We finally get rid of the annoying tmp var `result`! Yeal~
 
-
 ### \_.sum (best)
 
-``` javascript
+```javascript
 // array = [1,2,3,4]
 function sum(array) {
-  return _.sum(array);
+  return _.sum(array)
 }
 ```
 
@@ -147,22 +146,22 @@ Always exploring lodash for data transformation tasks
 
 consider the `clean` function here:
 
-``` javascript
+```javascript
 // ['tag1', 'tag2', 'tag1  '] -> ['tag1', 'tag2']
 function clean(tags) {
-  let dedupe = {};
-  for (let i = 0; i < tags.length; i++){
-    tags[i] = tags[i].trim();
-    const aTag = tags[i];
+  let dedupe = {}
+  for (let i = 0; i < tags.length; i++) {
+    tags[i] = tags[i].trim()
+    const aTag = tags[i]
 
-    if(dedupe[aTag]) {
-      tags.splice(i, 1);
-      i--;
+    if (dedupe[aTag]) {
+      tags.splice(i, 1)
+      i--
     } else {
-      dedupe[aTag] = true;
+      dedupe[aTag] = true
     }
   }
-  return tags;
+  return tags
 }
 ```
 
@@ -170,7 +169,7 @@ it takes some time to brain-parse this function, it seems to work but it has a p
 
 ### impurity
 
-``` diff
+```diff
 // ['tag1', 'tag2', 'tag1  '] -> ['tag1', 'tag2']
 function clean(tags) {
   let dedupe = {};
@@ -196,9 +195,10 @@ Imagine the `tags` argument passed in could be used in somewhere else, then this
 This is called `side effect` in functional programming world. and the `clean` function above is defined as `impure`
 
 ### pure function
+
 So we could come up with a better solution:
 
-``` diff
+```diff
 // ['tag1', 'tag2', 'tag1  '] -> ['tag1', 'tag2']
 function clean(tags) {
   let dedupe = {};
@@ -233,14 +233,14 @@ To achieve this goal, we could follow a simple rule:
 
 try to apply that to the `clean` function, we could get
 
-``` javascript
+```javascript
 // ['tag1', 'tag2', 'tag1'] -> ['tag1', 'tag2']
 function clean(tags) {
-  let dedupe = {};
-  let result = [];
+  let dedupe = {}
+  let result = []
 
   for (let i = 0; i < tags.length; i++) {
-    dedupe[tags[i].trim()] = true;
+    dedupe[tags[i].trim()] = true
   }
 
   for (let i = 0; i < tags.length; i++) {
@@ -249,12 +249,11 @@ function clean(tags) {
     }
   }
 
-  return result;
+  return result
 }
 ```
 
 Here inside those 2 loops, we could easily figure out what they are doing respectively.
-
 
 ### Lazy evaluation
 
@@ -264,36 +263,43 @@ Here will introduce the killer feature of `lodash` - chainable api
 
 it is basically implemented using `_.chain(collection)` method, or `_(collection)` as a shorthand, and could be optimized easily
 
-``` javascript
-const result = _(source).map(func1).map(func2).map(func3).value();
+```javascript
+const result = _(source)
+  .map(func1)
+  .map(func2)
+  .map(func3)
+  .value()
 ```
 
 is transformed to something like following in normal mode.
 
-``` javascript
-let result = [], temp1 = [], temp2 = [], temp3 = [];
+```javascript
+let result = [],
+  temp1 = [],
+  temp2 = [],
+  temp3 = []
 
 for (var i = 0; i < source.length; i++) {
- temp1[i] = func1(source[i]);
+  temp1[i] = func1(source[i])
 }
 
 for (i = 0; i < source.length; i++) {
- temp2[i] = func2(temp1[i]);
+  temp2[i] = func2(temp1[i])
 }
 
 for (i = 0; i < source.length; i++) {
- temp3[i] = func3(temp2[i]);
+  temp3[i] = func3(temp2[i])
 }
 
-result = temp3;
+result = temp3
 ```
 
 But in the lazy mode (could be accomplished with `lazy.js`):
 
-``` javascript
-let result = [];
+```javascript
+let result = []
 for (var i = 0; i < source.length; i++) {
-  result[i] = func3(func2(func1(source[i])));
+  result[i] = func3(func2(func1(source[i])))
 }
 ```
 
@@ -301,13 +307,13 @@ as you could see, `O(kn)` algorithm has been optimized to `O(n)`. With pure `for
 
 ### Lodash Chainable API: rewrite `clean` function
 
-``` javascript
+```javascript
 // ['tag1', 'tag2  ', 'tag1 '] -> ['tag1', 'tag2']
 function clean(tags) {
   return _(tags)
     .map(_.trim)
     .uniq()
-    .value();
+    .value()
 }
 ```
 
@@ -319,24 +325,24 @@ read the documentation on [lodash chain](https://lodash.com/docs/4.17.2#chain) f
 
 consider the function below:
 
-``` javascript
+```javascript
 function mergeAndOverwrite(target, source) {
-  target = _.merge(_.cloneDeep(target), source.merge);
+  target = _.merge(_.cloneDeep(target), source.merge)
 
   for (let config_key in source.overwrite) {
     if (source.overwrite.hasOwnProperty(config_key)) {
-      target[config_key] = source.overwrite[config_key];
+      target[config_key] = source.overwrite[config_key]
     }
   }
 
-  return target;
+  return target
 }
 ```
 
 there are 2 gotchas:
+
 1. 1st parameter in `_.merge` could be an empty object, and `_.merge` is a recursive deep operation already, so `_.cloneDeep` is somewhat a cumbersome call.
 2. the for ... in loop could be entirely replaced by `Object.assign`
-
 
 ### \_.merge vs Object.assign
 
@@ -345,31 +351,24 @@ Those 2 functions are similar but do things in totally different ways:
 1. \.merge is a recursive call, so it traverses **every** property all object and merge them
 2. Object.assign only overwrite the 1st layer of right hand-side to left hands-side
 
-``` javascript
+```javascript
 // => { "a": { "a": "a","b":"bb" }}
-_.merge({}, {a:{a:'a'}}, {a:{b:'bb'}})
+_.merge({}, { a: { a: 'a' } }, { a: { b: 'bb' } })
 // => { "a": { "b": "bb" }}
-Object.assign({}, {a:{a:'a'}}, {a:{b:'bb'}})
+Object.assign({}, { a: { a: 'a' } }, { a: { b: 'bb' } })
 
 // => { "a": [ "bb" ] }
-_.merge({}, {a:['a']}, {a:['bb']})
+_.merge({}, { a: ['a'] }, { a: ['bb'] })
 // => { "a": [ "bb" ] }
-Object.assign({}, {a:['a']}, {a:['bb']})
+Object.assign({}, { a: ['a'] }, { a: ['bb'] })
 ```
 
 ### rewrite the `mergeAndOverwrite` function
 
-``` javascript
+```javascript
 function mergeAndOverwrite(target, source) {
-  const merged = _.merge(
-    {},
-    target,
-    source.merge
-  );
-  return Object.assign(
-    merged,
-    source.overwrite
-  );
+  const merged = _.merge({}, target, source.merge)
+  return Object.assign(merged, source.overwrite)
 }
 ```
 
@@ -381,31 +380,35 @@ Read through Lodash doc before using \_.cloneDeep
 
 To wrap up, consider the following function
 
-``` javascript
+```javascript
 function filterAck(acl_hash) {
   // 0
-  let filtered_api_acl = {};
+  let filtered_api_acl = {}
   for (let api_version in acl_hash) {
     // 1
     if (acl_hash.hasOwnProperty(api_version)) {
       // 2
       if (config.api_key.default_user_api_acl[api_version]) {
         // 3
-        filtered_api_acl[api_version] = [];
+        filtered_api_acl[api_version] = []
         if (_.isArray(acl_hash[api_version])) {
           // 4
           for (let i = 0; i < acl_hash[api_version].length; i++) {
             // 5
-            if (config.api_key.default_user_api_acl[api_version].indexOf(acl_hash[api_version][i]) !== -1) {
+            if (
+              config.api_key.default_user_api_acl[api_version].indexOf(
+                acl_hash[api_version][i]
+              ) !== -1
+            ) {
               // 6
-              filtered_api_acl[api_version].push(acl_hash[api_version][i]);
+              filtered_api_acl[api_version].push(acl_hash[api_version][i])
             }
           }
         }
       }
     }
   }
-  return filtered_api_acl;
+  return filtered_api_acl
 }
 ```
 
@@ -421,7 +424,7 @@ Whenever writing code, try your best to keep the indentation level <= 3 is gener
 
 indentation level `-1`, current `5`
 
-``` diff
+```diff
 function filterAck(acl_hash) {
   let filtered_api_acl = {};
 - for (let api_version in acl_hash) {
@@ -458,7 +461,7 @@ function filterAck(acl_hash) {
 
 indentation level `-2`, current: `3`
 
-``` diff
+```diff
 function filterAcl(acl_hash) {
   let filtered_api_acl = {};
   Object.keys(acl_hash).forEach(api_version => {
@@ -486,28 +489,28 @@ function filterAcl(acl_hash) {
 
 indentation level `-1`, current `2`
 
-``` javascript
+```javascript
 function filterAcl(acl_hash) {
-  let filtered_api_acl = {};
+  let filtered_api_acl = {}
   Object.keys(acl_hash).forEach(api_version => {
     if (!config.api_key.default_user_api_acl[api_version]) {
       // 2
-      return;
+      return
     }
 
     if (!_.isArray(acl_hash[api_version])) {
-      return;
+      return
     }
 
-    filtered_api_acl[api_version] = [];
+    filtered_api_acl[api_version] = []
 
     filtered_api_acl[api_version] = _.intersection(
       config.api_key.default_user_api_acl[api_version],
       acl_hash[api_version]
-    );
-  });
+    )
+  })
 
-  return filtered_api_acl;
+  return filtered_api_acl
 }
 ```
 
@@ -515,21 +518,20 @@ function filterAcl(acl_hash) {
 
 indentation level `-2`, current `0`
 
-``` javascript
+```javascript
 function filterAcl(acl_hash) {
-  return _
-    .chain(Object.keys(acl_hash))
+  return _.chain(Object.keys(acl_hash))
     .filter(api_version => config.api_key.default_user_api_acl[api_version])
     .filter(api_version => Array.isArray(acl_hash[api_version]))
-    .map(api_version => ([
+    .map(api_version => [
       api_version,
       _.intersection(
         config.api_key.default_user_api_acl,
         acl_hash[api_version]
-      )
-    ]))
+      ),
+    ])
     .fromPairs()
-    .value();
+    .value()
 }
 ```
 
@@ -541,7 +543,7 @@ Use Lodash!
 
 #### references:
 
-* [lodash-doc](https://lodash.com/docs/4.17.2)
-* [lazy-js-intro](http://philosopherdeveloper.com/posts/introducing-lazy-js.html)
-* [for-in-stackoverflow](http://stackoverflow.com/questions/500504/why-is-using-for-in-with-array-iteration-a-bad-idea)
-* [simple-rules-for-simple-code](https://laracasts.com/series/simple-rules-for-simpler-code)
+- [lodash-doc](https://lodash.com/docs/4.17.2)
+- [lazy-js-intro](http://philosopherdeveloper.com/posts/introducing-lazy-js.html)
+- [for-in-stackoverflow](http://stackoverflow.com/questions/500504/why-is-using-for-in-with-array-iteration-a-bad-idea)
+- [simple-rules-for-simple-code](https://laracasts.com/series/simple-rules-for-simpler-code)

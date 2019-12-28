@@ -1,6 +1,6 @@
 ---
 title: Tips for making a mid-scale react application
-date: "2018-08-04 13:45"
+date: '2018-08-04 13:45'
 ---
 
 There are already quite a lot of medium tutorials teaching people out there for how to make a proper react application using react + redux stack. And people even developed some great ideas like [dva](https://dvajs.com/) to reduce boilerplate and pain to setup the whole stack.
@@ -184,29 +184,27 @@ export default (loader, loaderProps = {}) => Loadable({
 });
 ```
 
-
 Route Config
 React-routerv4 enables us to write routes in a very flexible way. It unlocks the power of extremely modular way to do routing. But in my personal experience, I found that gathering all route config in one single file is much easier for new comers / looking back into an old project to get all the routes.
 
 ```js
-export default () => 
+export default () => (
   <Router history={history}>
-  <Switch>
-    <Route path="/" exact component={Welcome} />
-    <Route path="/register" exact component={Register} />
-    <Route path="/login" exact component={Login} />
-    <Route path="/forgot-password" exact component={ForgotPassword} />
-    <Route path="/verify-email" exact component={VerifyEmail} />
-    <Route path="/reset-password" exact component={ResetPassword} />
-    <Route path="/dashboard" component={Dashboard} />
-    <Route path="/orders" exact component={Orders} />
-    <Route path="/orders/:id" exact component={OrderDetail} />
-    <Route component={NotFound} />
-  </Switch>
-</Router>
+    <Switch>
+      <Route path="/" exact component={Welcome} />
+      <Route path="/register" exact component={Register} />
+      <Route path="/login" exact component={Login} />
+      <Route path="/forgot-password" exact component={ForgotPassword} />
+      <Route path="/verify-email" exact component={VerifyEmail} />
+      <Route path="/reset-password" exact component={ResetPassword} />
+      <Route path="/dashboard" component={Dashboard} />
+      <Route path="/orders" exact component={Orders} />
+      <Route path="/orders/:id" exact component={OrderDetail} />
+      <Route component={NotFound} />
+    </Switch>
+  </Router>
+)
 ```
-
-
 
 In such way it's crystal clear that what feature is enabled in the application.
 
@@ -216,6 +214,7 @@ GraphQL is already out there for a while. I think up to this moment, if you are 
 However, not all applications have this luxury of using graphQL, most of the legacy projects still need to utilise good old restful API.
 So if your restful API has some consistent convention, it'll be best to find a way to generalise it.
 90% of the cases, typical request goes through those steps
+
 1. resource request (from componentDidMountor handleClick etc.)
 2. start loading
 3. make the request
@@ -233,46 +232,45 @@ First i will create a file named constant/Resources.js , I will give each resou
 
 ```js
 export default function makeResource(resource, opts = '') {
-  const resourceUpper = resource.toUpperCase();
+  const resourceUpper = resource.toUpperCase()
 
   const resourceConstants = {
     RESOURCE: resource,
     LOADING: `${resourceUpper}_LOADING`,
     CLEAR: `CLEAR_${resourceUpper}`,
-  };
+  }
 
   if (opts.includes('C')) {
     Object.assign(resourceConstants, {
       CREATE_DONE: `CREATE_${resourceUpper}_DONE`,
       CREATE_REQUEST: `CREATE_${resourceUpper}_REQUEST`,
-    });
+    })
   }
 
   if (opts.includes('R')) {
     Object.assign(resourceConstants, {
       FETCH_DONE: `FETCH_${resourceUpper}_DONE`,
       FETCH_REQUEST: `FETCH_${resourceUpper}_REQUEST`,
-    });
+    })
   }
 
   if (opts.includes('U')) {
     Object.assign(resourceConstants, {
       UPDATE_DONE: `UPDATE_${resourceUpper}_DONE`,
       UPDATE_REQUEST: `UPDATE_${resourceUpper}_REQUEST`,
-    });
+    })
   }
 
   if (opts.includes('D')) {
     Object.assign(resourceConstants, {
       DELETE_DONE: `DELETE_${resourceUpper}_DONE`,
       DELETE_REQUEST: `DELETE_${resourceUpper}_REQUEST`,
-    });
+    })
   }
 
-  return resourceConstants;
+  return resourceConstants
 }
 ```
-
 
 to use it, just do sth like
 
@@ -288,7 +286,7 @@ const ORDERS = makeResource('order', 'CRUD')
 //   UPDATE_REQUEST: 'UPDATE_ORDER_DONE',
 //   UPDATE_DONE: 'UPDATE_ORDER_DONE',
 //   DELETE_REQUEST: 'DELETE_ORDER_DONE',
-//   DELETE_DONE: 'DELETE_ORDER_DONE', 
+//   DELETE_DONE: 'DELETE_ORDER_DONE',
 // }
 ```
 
@@ -298,91 +296,90 @@ next, we need to have a suite of generic actions that will accept those special 
 export const update = resource => payload => ({
   type: resource.UPDATE_REQUEST,
   payload,
-});
+})
 
 update.done = resource => payload => ({
   type: resource.UPDATE_DONE,
   payload,
-});
+})
 
 export const create = resource => payload => ({
   type: resource.CREATE_REQUEST,
   payload,
-});
+})
 
 create.done = resource => payload => ({
   type: resource.CREATE_DONE,
   payload,
-});
+})
 
 export const remove = resource => payload => ({
   type: resource.DELETE_REQUEST,
   payload,
-});
+})
 
 remove.done = resource => payload => ({
   type: resource.DELETE_DONE,
   payload,
-});
+})
 
 export const fetch = resource => payload => ({
   type: resource.FETCH_REQUEST,
   payload,
-});
+})
 
 fetch.done = resource => payload => ({
   type: resource.FETCH_DONE,
   payload,
-});
+})
 
 export const clear = resource => () => ({
   type: resource.CLEAR,
-});
+})
 ```
-
 
 for the reducer, actually it's quite easy to generalize as well, but the detailed implementation is related to how the restful API is being designed, so i will make a very extensible reducer
 
 ```js
-import {combineReducers} from 'redux';
-import * as resources from 'app/constants/Resources';
+import { combineReducers } from 'redux'
+import * as resources from 'app/constants/Resources'
 
-import order from './order';
+import order from './order'
 
 const extensions = {
   [resources.CONNECTION.ORDER]: order,
-};
+}
 
-const resourceReducers = Object
-  .keys(resources)
-  .reduce((acc, cur) => {
-    const resource = resources[cur];
-    if (resource.FETCH_DONE) {
-      acc[resource.RESOURCE] = createResourceReducer(resource, extensions[resource.RESOURCE]);
-    } else {
-      acc[resource.RESOURCE] = extensions[resource.RESOURCE];
-    }
-    return acc;
-  }, {});
+const resourceReducers = Object.keys(resources).reduce((acc, cur) => {
+  const resource = resources[cur]
+  if (resource.FETCH_DONE) {
+    acc[resource.RESOURCE] = createResourceReducer(
+      resource,
+      extensions[resource.RESOURCE]
+    )
+  } else {
+    acc[resource.RESOURCE] = extensions[resource.RESOURCE]
+  }
+  return acc
+}, {})
 
-export default combineReducers(resourceReducers);
+export default combineReducers(resourceReducers)
 
 export function createResourceReducer(resource, extension) {
-  const {FETCH_DONE, CLEAR} = resource;
+  const { FETCH_DONE, CLEAR } = resource
   return function reducer(state = {}, action) {
     // those actions are ensured to be in the resource
     switch (action.type) {
       case FETCH_DONE:
-        return action.payload;
+        return action.payload
       case CLEAR:
-        return {};
+        return {}
       default:
-        return extension ? extension(state, action) : state;
+        return extension ? extension(state, action) : state
     }
-  };
+  }
 }
 ```
-
 
 In reality, the API that responses data could be quite different, so a very flexible and pluggable reducer is needed here.
 In components, upon dispatching a request, you just simply do this.
@@ -404,38 +401,40 @@ we have covered the content resource in the previous section. It seems like the 
 With the powerful resource concept, the flow we mentioned above is really easy
 
 ```js
-import {put, call, fork} from 'redux-saga/effects';
-import {takeLatest} from 'redux-saga';
-        
-import {addMessage} from 'app/actions/messages';
-import {startLoading, endLoading} from 'app/actions/loading';
-import {ORDER} from 'app/constants/Resources';
-import {fetch} from 'app/actions/resources';
-import {apiClient} from 'app/utils/network';
+import { put, call, fork } from 'redux-saga/effects'
+import { takeLatest } from 'redux-saga'
+
+import { addMessage } from 'app/actions/messages'
+import { startLoading, endLoading } from 'app/actions/loading'
+import { ORDER } from 'app/constants/Resources'
+import { fetch } from 'app/actions/resources'
+import { apiClient } from 'app/utils/network'
 
 export function* fetchOrder() {
-  yield put(startLoading(ORDER));
+  yield put(startLoading(ORDER))
 
-  const {error, payload} = yield call(apiClient, {
+  const { error, payload } = yield call(apiClient, {
     method: 'GET',
     url: '/api/order/' + action.payload.id,
-  });
+  })
 
   if (error) {
-    yield put(addMessage({
-      style: 'danger',
-      message: payload.message,
-      details: payload.details,
-    }));
+    yield put(
+      addMessage({
+        style: 'danger',
+        message: payload.message,
+        details: payload.details,
+      })
+    )
   } else {
-    yield put(fetch.done(ORDER)(payload.data));
+    yield put(fetch.done(ORDER)(payload.data))
   }
 
-  yield put(endLoading(ORDER));
+  yield put(endLoading(ORDER))
 }
 
-export default function* () {
-  yield fork(takeLatest, ORDER.FETCH_REQUEST, fetchOrder);
+export default function*() {
+  yield fork(takeLatest, ORDER.FETCH_REQUEST, fetchOrder)
 }
 ```
 
@@ -447,43 +446,41 @@ When it comes to form, usually it's very complicated using react. However, redux
 here is a complete example of how a form could be handled together with redux-form. I won't be going through the details in redux-form usages
 
 ```jsx
-import React, {PureComponent} from 'react';
-import PropTypes from 'prop-types';
-import {Form} from 'react-bootststrap';
-import {connect} from 'react-redux';
-import {reduxForm, Field} from 'redux-form';
-import {Link} from 'react-router-dom';
+import React, { PureComponent } from 'react'
+import PropTypes from 'prop-types'
+import { Form } from 'react-bootststrap'
+import { connect } from 'react-redux'
+import { reduxForm, Field } from 'redux-form'
+import { Link } from 'react-router-dom'
 
-import isLoading from 'app/selectors/isLoading';
-import getResource from 'app/selectors/getResource';
-import {USER} from 'app/constants/Resources';
-import {PROFILE_FORM} from 'app/constants/Forms';
-import {fetch, update} from 'app/actions/resources';
+import isLoading from 'app/selectors/isLoading'
+import getResource from 'app/selectors/getResource'
+import { USER } from 'app/constants/Resources'
+import { PROFILE_FORM } from 'app/constants/Forms'
+import { fetch, update } from 'app/actions/resources'
 
-import gridFormGroup from 'app/components/Form/gridFormGroup';
-import {InputField} from 'app/components/Form/ReduxFormFields';
-import {email, maxLength, required} from 'app/components/Form/validators';
+import gridFormGroup from 'app/components/Form/gridFormGroup'
+import { InputField } from 'app/components/Form/ReduxFormFields'
+import { email, maxLength, required } from 'app/components/Form/validators'
 
-const InputGroup = gridFormGroup(InputField);
+const InputGroup = gridFormGroup(InputField)
 
 const validateEmail = [
   required('Invalid email'),
   email('Invalid email'),
   maxLength(254),
-];
+]
 
-const validateName = [
-  maxLength(200),
-];
+const validateName = [maxLength(200)]
 
 class AccountProfileForm extends PureComponent {
   static propTypes = {
     fetchUser: PropTypes.func.isRequired,
     handleSubmit: PropTypes.func.isRequired,
-  };
+  }
 
   componentDidMount() {
-    this.props.fetchUser();
+    this.props.fetchUser()
   }
 
   render() {
@@ -518,42 +515,45 @@ class AccountProfileForm extends PureComponent {
           placeholder="• • • • • • • •"
         />
       </Form>
-    );
+    )
   }
 }
 
 const initialValues = user => ({
   name: user.name,
   email: user.email,
-});
+})
 
 const transformPayload = formData => ({
   name: formData.name,
   email: formData.email,
-});
+})
 
 const mapStatesToProps = state => ({
   isLoading: isLoading(state, USER),
   initialValues: initialValues(getResource(state, USER)),
-});
+})
 
 const mapDispatchToProps = {
   onSubmit: formData => update(USER)(transformPayload(formData)),
   fetchUser: fetch(USER),
-};
+}
 
-export default connect(mapStatesToProps, mapDispatchToProps)(
+export default connect(
+  mapStatesToProps,
+  mapDispatchToProps
+)(
   reduxForm({
     enableReinitialize: true,
     form: PROFILE_FORM,
-  })(AccountProfileForm),
-);
+  })(AccountProfileForm)
+)
 ```
 
 ## url-based state
 
 1. usually when an action is taken, we need to display some intermediate UI element to let the user perform some actions. We found that for cases like
-open /close modal
+   open /close modal
 2. tab change
 3. filter change in a list page
 
@@ -561,20 +561,16 @@ it will be the best to purely use URL to control them
 
 ```jsx
 export default () => (
-  <Route
-    path="/orders/:id/delete"
-    exact
-  >
-    {({match}) => 
+  <Route path="/orders/:id/delete" exact>
+    {({ match }) => (
       <DeleteOrderModal
         show={Boolean(match)}
-        connection={{id: match && match.params && match.params.id}}
+        connection={{ id: match && match.params && match.params.id }}
       />
-    }
+    )}
   </Route>
 )
 ```
-
 
 In such case, to open the modal, you just point the user to specific route, no hassle at all, and it's completely under control
 
@@ -589,5 +585,5 @@ export default combineReducers({
   messages,
   router,
   resources,
-});
+})
 ```

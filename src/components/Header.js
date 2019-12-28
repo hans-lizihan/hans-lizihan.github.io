@@ -23,13 +23,13 @@ const Header = ({ siteTitle }) => {
             <b>{siteTitle}</b>
           </Link>
           <a
-            href="#"
+            href="/"
             role="button"
             className={`navbar-burger ${isOpen ? 'is-active' : ''}`}
             aria-label="menu"
             aria-expanded="false"
-            onClick={(e) => {
-              e.preventDefault();
+            onClick={e => {
+              e.preventDefault()
               setOpen(!isOpen)
             }}
           >

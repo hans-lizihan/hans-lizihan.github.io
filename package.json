@@ -33,6 +33,7 @@
     "react-particles-js": "^2.7.0"
   },
   "devDependencies": {
+    "gh-pages": "^2.1.1",
     "prettier": "^1.19.1"
   },
   "keywords": [
@@ -42,7 +43,8 @@
   "scripts": {
     "build": "gatsby build",
     "develop": "gatsby develop",
-    "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
+    "deploy": "gatsby build && cp ./CNAME public && gh-pages -d public -b master",
+    "format": "prettier --write \"**/*.{js,jsx,json,md,scss,css}\"",
     "start": "yarn develop",
     "serve": "gatsby serve",
     "clean": "gatsby clean",

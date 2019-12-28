@@ -93,8 +93,16 @@ const IndexPage = () => (
     </section>
     <section className="hero is-small is-light">
       <div className="hero-body container content has-text-centered">
-        <p className="title"><code>$ whoami</code></p>
-        <p>I have been working here in Hong Kong for <b>4 years</b>. I started as <strong>Frontend Developer</strong> and start to contribute heavily in <strong>backend</strong> as well. Recently I have been working heavily with <strong>DevOps</strong> and trying to bring more automation in whole development process.</p>
+        <p className="title">
+          <code>$ whoami</code>
+        </p>
+        <p>
+          I have been working here in Hong Kong for <b>4 years</b>. I started as{' '}
+          <strong>Frontend Developer</strong> and start to contribute heavily in{' '}
+          <strong>backend</strong> as well. Recently I have been working with{' '}
+          <strong>DevOps</strong> and trying to bring more automation in whole
+          development process.
+        </p>
       </div>
     </section>
     <section className="section">
@@ -109,12 +117,34 @@ const IndexPage = () => (
                 </div>
               </article>
               <article className="tile is-child notification is-warning">
-                <p className="title">Music <small className="subtitle">Classic & Rock</small></p>
+                <p className="title">
+                  Music <small className="subtitle">Classic & Rock</small>
+                </p>
                 <div className="content">
-                  <span className="tag is-danger is-light" style={{marginRight: 8}}>AC/DC</span>
-                  <span className="tag is-info is-light" style={{marginRight: 8}}>2 Cellos</span>
-                  <span className="tag is-info is-light" style={{marginRight: 8}}>万能青年旅店</span>
-                  <span className="tag is-danger is-light" style={{marginRight: 8}}>Hans Zimmer</span>
+                  <span
+                    className="tag is-danger is-light"
+                    style={{ marginRight: 8 }}
+                  >
+                    AC/DC
+                  </span>
+                  <span
+                    className="tag is-info is-light"
+                    style={{ marginRight: 8 }}
+                  >
+                    2 Cellos
+                  </span>
+                  <span
+                    className="tag is-info is-light"
+                    style={{ marginRight: 8 }}
+                  >
+                    万能青年旅店
+                  </span>
+                  <span
+                    className="tag is-danger is-light"
+                    style={{ marginRight: 8 }}
+                  >
+                    Hans Zimmer
+                  </span>
                   <span className="tag is-success is-light">Led Zepplin</span>
                 </div>
               </article>
@@ -131,9 +161,32 @@ const IndexPage = () => (
             <article className="tile is-child notification is-pink">
               <p className="title">Teenage</p>
               <div className="content">
-                <p>I went to <b>Beijing No. 80 High School</b> for both of my junior high school and senior high school education. (yeah I hear you... I sincere ly have no idea how many high schools are there in Beijing)</p>
-                <p>A fun part of my middle school is when I entered the junior High School in CBD area (白家庄) in Beijing in 2005, one of the building in my school was the tallest one, 6 floors. However after I graduated in 2008, the area has been developed heavily. The 6 floor building seems a hobbit in side a bunch of normal terran. The sad thing is we lost our sunset forever - the tall buildings blocked them.</p>
-                <p>Okay, so it's first time I share this in public. But I think it's fun. So I was in love with this girl. In my high school, there was a garden planted with this persimmon tree. So I came up with this super dumb idea: What about I hold you up to get that persimmon (It was like 2.5 meters high). And our love story started with that inedible persimmon. Destiny always finds you, it ended that way as well, bitter sweet.</p>
+                <p>
+                  I went to <b>Beijing No. 80 High School</b> for both of my
+                  junior high school and senior high school education. (yeah I
+                  hear you... I sincerely have no idea how many high schools are
+                  there in Beijing)
+                </p>
+                <p>
+                  A fun part of my middle school is when I entered the junior
+                  High School in CBD area (白家庄) in Beijing in 2005, one of
+                  the building in my school was the tallest one, 6 floors.
+                  However after I graduated in 2008, the area has been developed
+                  a lot. The 6 floor building seems a hobbit inside a bunch of
+                  normal terran. The sad thing is we lost our sunset forever -
+                  the tall buildings blocked them.
+                </p>
+                <p>
+                  My high schools was a board school. By then iTouch and iPhone
+                  was just released. We were crazy about those games in first or
+                  second generation of i-devices. I learned to jailbreak iPhone
+                  at that time, because I've got a iPhone 3gs but it's those
+                  batch locked in with AT&T. So to use them there are no way but
+                  to crack them. Good old days, blackra1n, purplera1n. I think
+                  those jailbreak experiences was one of the reason why I
+                  started my professional software engineer (though I am not
+                  focused on hacking phones or anything related to security).
+                </p>
               </div>
             </article>
           </div>
@@ -144,10 +197,35 @@ const IndexPage = () => (
               <p className="title">Childhood</p>
               <p className="subtitle">My origin</p>
               <div className="content">
-                <p>I was born in <em>Tiayuan, Shanxi Province, China.</em> I spent my first 7 years in that city. All I remember now is the fun but warm dialects and <b>Red Alert</b> as well as <b>StarCraft</b>. I started playing piano and learn about chess.</p>
-                <p>I went to primary school in <em>Beijing, China</em>. I started reading at age of 7. I succesfully proved that it takes 7 years for a Chineses lad to finally read Chinese. So be patient, if you can't master this language, most likely it's not your fault.</p>
-                <p>My primary school was delightful, I met quite some rich kids in the class. They was just normal kids back then. We do stupid things together and went to play football when the largest sandstorm strike Beijing. We have no fear toward power at all back then.</p>
-                <p>Oh, of course, like every boy, I was devoted to games. Pokemon, Need for Speed, a bunch of RPG games like 剑侠情缘. But among all of them, I love a black and white game on my e dictionary most. It was called 伏魔记 (A Conquest to the Demon). The best part about playing games on your e-dictionary is your parent never know that you were playing games.</p>
+                <p>
+                  I was born in <em>Taiyuan, Shanxi Province, China.</em> I
+                  spent my first 7 years in that city. All I remember now is the
+                  fun but warm dialects and <b>Red Alert</b> as well as{' '}
+                  <b>StarCraft</b>. I started playing piano and learn about
+                  chess.
+                </p>
+                <p>
+                  I went to primary school in <em>Beijing, China</em>. I started
+                  reading at age of 7. I succesfully proved that it takes 7
+                  years for a Chineses lad to finally read Chinese. So be
+                  patient, if you can't master this language, most likely it's
+                  not your fault.
+                </p>
+                <p>
+                  My primary school was delightful, I met quite some rich kids
+                  in the class. They was just normal kids back then. We do
+                  stupid things together and went to play football when the
+                  largest sandstorm strike Beijing. We have no fear toward power
+                  at all back then.
+                </p>
+                <p>
+                  Oh, of course, like every boy, I was devoted to games.
+                  Pokemon, Need for Speed, a bunch of RPG games like 剑侠情缘.
+                  But among all of them, I love a black and white game on my e
+                  dictionary most. It was called 伏魔记 (A Conquest to the
+                  Demon). The best part about playing games on your e-dictionary
+                  is your parent never know that you were playing games.
+                </p>
               </div>
             </div>
           </article>

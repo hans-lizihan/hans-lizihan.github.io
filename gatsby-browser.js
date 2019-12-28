@@ -5,4 +5,4 @@
  */
 
 // You can delete this file if you're not using it
-import './src/components/styles.scss';
+import './src/components/styles.scss'
