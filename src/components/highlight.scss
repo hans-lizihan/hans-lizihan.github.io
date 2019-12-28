@@ -1,0 +1,273 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap');
+
+// highlight which language it is in
+.gatsby-highlight {
+  position: relative;
+  -webkit-overflow-scrolling: touch;
+}
+.gatsby-highlight pre[class*="language-"] {
+  -webkit-overflow-scrolling: touch;
+}
+.gatsby-highlight pre[class*="language-"]::before {
+  background: black;
+  border-radius: 0 0 0.25rem 0.25rem;
+  color: white;
+  font-size: 12px;
+  letter-spacing: 0.025rem;
+  padding: 0.1rem 0.5rem;
+  position: absolute;
+  right: 1rem;
+  text-align: right;
+  text-transform: uppercase;
+  top: 0;
+}
+.gatsby-highlight pre[class="language-javascript"]::before,
+.gatsby-highlight pre[class="language-js"]::before {
+  content: 'js';
+  background: #f7df1e;
+  color: black;
+}
+.gatsby-highlight pre[class="language-jsx"]::before {
+  content: 'jsx';
+  background: #61dafb;
+  color: black;
+}
+.tip {
+  position: relative;
+  margin: 2em 0;
+  padding: 12px 24px 12px 30px;
+  border-left: 4px solid #f66;
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
+  background-color: #f8f8f8;
+  br {
+    display: none;
+  }
+}
+.tip:before {
+  position: absolute;
+  top: 14px;
+  left: -12px;
+  content: "!";
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+  color: #fff;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: bold;
+  text-align: center;
+  background-color: #f66;
+  font-family: 'Dosis', 'Source Sans Pro', 'Helvetica Neue', Arial, sans-serif;
+}
+
+code[class*="language-"],
+pre[class*="language-"] {
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  color: #525252;
+  background: #f8f8f8;
+  font-family: Roboto Mono, monospace;
+  font-size: 1em;
+  line-height: 1.5em;
+
+  -moz-tab-size: 4;
+  -o-tab-size: 4;
+  tab-size: 4;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+
+code[class*="language-"]::-moz-selection,
+pre[class*="language-"]::-moz-selection,
+code[class*="language-"] ::-moz-selection,
+pre[class*="language-"] ::-moz-selection {
+  background: #cceae7;
+  color: #263238;
+}
+
+code[class*="language-"]::selection,
+pre[class*="language-"]::selection,
+code[class*="language-"] ::selection,
+pre[class*="language-"] ::selection {
+  background: #cceae7;
+  color: #263238;
+}
+
+:not(pre) > code[class*="language-"] {
+  background-color: $code-background;
+  color: $code;
+  font-size: $code-size;
+  font-weight: $code-weight;
+  padding: $code-padding;
+}
+
+pre[class*="language-"] {
+  overflow: auto;
+  position: relative;
+  margin: 0.5em 0;
+  padding: 1.25em 1em;
+}
+
+.language-css > code,
+.language-sass > code,
+.language-scss > code {
+  color: #a32eff;
+}
+
+[class*="language-"] .namespace {
+  opacity: 0.7;
+}
+
+.token.atrule {
+  color: #d63200;
+}
+
+.token.attr-name {
+  color: #39adb5;
+}
+
+.token.attr-value {
+  color: #42b983;
+}
+
+.token.attribute {
+  color: #42b983;
+}
+
+.token.boolean {
+  color: #d63200;
+}
+
+.token.builtin {
+  color: #39adb5;
+}
+
+.token.cdata {
+  color: #39adb5;
+}
+
+.token.char {
+  color: #39adb5;
+}
+
+.token.class {
+  color: #39adb5;
+}
+
+.token.class-name {
+  color: #6182b8;
+}
+
+.token.comment {
+  color: #aabfc9;
+}
+
+.token.constant {
+  color: #d63200;
+}
+
+.token.deleted {
+  color: #e53935;
+}
+
+.token.doctype {
+  color: #aabfc9;
+}
+
+.token.entity {
+  color: #e53935;
+}
+
+.token.function {
+  color: #d63200;
+}
+
+.token.hexcode {
+  color: #a32eff;
+}
+
+.token.id {
+  color: #d63200;
+  font-weight: bold;
+}
+
+.token.important {
+  color: #d63200;
+  font-weight: bold;
+}
+
+.token.inserted {
+  color: #42b983;
+}
+
+.token.keyword {
+  color: #d63200;
+}
+
+.token.number {
+  color: #a32eff;
+}
+
+.token.operator {
+  color: #39adb5;
+}
+
+.token.prolog {
+  color: #aabfc9;
+}
+
+.token.property {
+  color: #39adb5;
+}
+
+.token.pseudo-class {
+  color: #42b983;
+}
+
+.token.pseudo-element {
+  color: #42b983;
+}
+
+.token.punctuation {
+  color: #39adb5;
+}
+
+.token.regex {
+  color: #6182b8;
+}
+
+.token.selector {
+  color: #e53935;
+}
+
+.token.string {
+  color: #42b983;
+}
+
+.token.symbol {
+  color: #d63200;
+}
+
+.token.tag {
+  color: #e53935;
+}
+
+.token.unit {
+  color: #a32eff;
+}
+
+.token.url {
+  color: #e53935;
+}
+
+.token.variable {
+  color: #e53935;
+}
