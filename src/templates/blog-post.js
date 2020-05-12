@@ -9,7 +9,7 @@ export default ({ data }) => {
       <section className="section">
         <div className="container">
           <div className="columns">
-            <div className="blog content column is-two-thirds is-offset-2">
+            <div className="blog content column is-half is-offset-3">
               <h1>{post.frontmatter.title}</h1>
               <div dangerouslySetInnerHTML={{ __html: post.html }} />
             </div>

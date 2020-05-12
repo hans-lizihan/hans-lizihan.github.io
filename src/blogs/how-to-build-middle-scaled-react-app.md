@@ -7,26 +7,27 @@ There are already quite a lot of medium tutorials teaching people out there for 
 
 [dva](https://dvajs.com/) is really nice, I loved the concept of it so much, It reminds me of ruby on rails a few years ago. However, besides the great benefits full-featured store management libraries could provide us, it has it's own shorthands as well.
 
-1. libs like [dva](https://dvajs.com/) is a bit over-encapsulated. so new joiner hardly know how does this magically work unless he/she spend quite sometime doing todo-lists following another tutorial.
-2. Modularity design is not straight forward. e.g. user as a module, orders as a module etc. It seems very ideal, you could even do code splitting by doing this, and only load necessary reducers / sagas whenever necessary. But in the end module-module will become a headache.
-3. Modularity design does not fit "page centric" designs. It turns out that in medium sized application, people are more focused on "What will this page do" rather than "what will this chunk of section in the page will do".
-4. Cannot find a way to integrate with other popular libraries. e.g. redux-form
+1. libs like [dva](https://dvajs.com/) is a bit **over-encapsulated**. so new joiner hardly know how does this magically work unless he/she spend quite sometime doing todo-lists following another tutorial.
+2. **Modularity design is not straight forward**. e.g. user as a module, orders as a module etc. It seems very ideal, you could even do code splitting by doing this, and only load necessary reducers / sagas whenever necessary. But in the end module-module will become a headache.
+3. **Modularity design does not fit "page centric" designs**. It turns out that in medium sized application, people are more focused on "What will this page do" rather than "what will this chunk of section in the page will do".
+4. **Cannot find a way to integrate with other popular libraries**. e.g. redux-form
 
-So what's the solution?
+**So what's the solution?**
 
-Well, we could use all small pieces of react ecosystem to build the suitable framework of our own! The process is super hard, but finally I have found a way to keep everything under control.
+We could use all small pieces of react ecosystem to build the suitable framework of our own! The process is super hard, but finally I have found a way to keep everything under control.
 
-TL;DR; Here are a few key take-aways:
+## TL;DR; 
 
-1. Use sock drawer design rather than modular design for your store and folder structure
-2. Put route configs in one file
-3. Generalise restful http calls by "resource"
-4. Control the flow using redux-saga
-5. If you encountered any form, just use redux-form. Trust me.
-6. Use url to control page state as much as possible
-7. Control # of action types and reducers being mounted to the rootReducer.
+1. Use **sock drawer** design rather than modular design for your store and folder structure
+2. Use **pages** folder to control pages and one time components
+3. Put **route configs in one file**
+4. Generalize **restful http calls by "resource"**
+5. Control the flow using **redux-saga**
+6. If you encountered any form, **just use redux-form** (or formik). Trust me.
+7. **Use url to control page state** as much as possible
+8. **Control # of action types** and reducers being mounted to the rootReducer.
 
-Project Layout
+## Sock drawer Project Layout
 
 ```
 app
@@ -80,14 +81,14 @@ app
     └── redirect.js
 ```
 
-as shown in the gist above, the project structure is purely sock drawer design.
-There is one folder that is quite interesting: pages folder. This is quite similar t the traditional containers folder if you came from the redux-todo-list tutorial. They are very similar, just differs in a few aspects:
+as shown in the gist above, the project structure is purely **sock drawer design**.
 
-1. allow non-container components to be presented in this folder. We found that some top level page components may not needed to do anything with connect HoC
-2. nest a components folder inside the page folder, allowing further splitting logic.
-3. default component being split out of the page component to become a private component of that page.
+There is one folder that is quite interesting: `pages` folder. It's similar to the traditional `containers` if you came from the redux-todo-list tutorial. They serve the same functionality, but differs in a few aspects:
 
-Here is a further folder structure i usually apply in the pages folder.
+1. **allow non-container components to be presented in this folder**. We found that some top level page components may **not** have to do anything with `connect` HoC
+2. **nest a components folder inside the page folder**, allowing further reusable page level components.
+
+## Pages folder
 
 ```
 app/pages
@@ -163,19 +164,19 @@ app/pages
 
 In real life, we wanted to encourage to group similar functionalities using components. But here is an embarrassing situation:
 
-1. some of the components is specific to a page
-2. some of the components need to access to store
-3. some of the components need to access URL
+1. some of the components is **specific to a page**
+2. some of the components need to **access redux store**
+3. some of the components need to **access URL**
 
-I would say any component falls fit into a use-case of those 3 categories, it indicates the component should be place in the pages folder. Based on a simple rule: make private first, then protected, finally public.
+If any component falls into above 3 categories, it indicates that the component should be place in the `pages` folder. Based on a simple rule: make private first, then protected, finally public.
 
-1. if a component is only used by a page, put that in pages/XXXPage/components folder
-2. if a component is being shared by 2 pages, extra 1 layer up to the top. pages/components
-3. if a component is being shared by 3 pages, and not accessing the store, put it in the app/components folder.
+1. if a component is only used by a page, put that in `pages/XXXPage/components` folder
+2. if a component is being shared by 2 pages, extra 1 layer up to the top. `pages/components`
+3. if a component is being shared by 3 pages, and not accessing the store, put it in the `app/components` folder.
 
-I found that following those simple rules make our application much readable, and encourage engineers to split more. Previously when we did not have this rules built in, i found that we easily achieve a 1000 lines container components which is absolutely horrible…
+I found that following those simple rules make our application much readable, and encourage engineers to split code in a more organized way. Previously when we did not have this rules built in, I found that we easily achieve a 1000 lines container components which is absolutely horrible…
 
-In such case, to do code splitting is relatively simpler as well. Because each folder has it's own index.js, you could choose to use react-lodable
+In such case, to do code splitting is relatively simpler as well. Because each folder has it's own index.js, you could choose to use `react-lodable` (updated: use `loadale-component` now)
 
 ```js
 export default (loader, loaderProps = {}) => Loadable({
@@ -184,8 +185,9 @@ export default (loader, loaderProps = {}) => Loadable({
 });
 ```
 
-Route Config
-React-routerv4 enables us to write routes in a very flexible way. It unlocks the power of extremely modular way to do routing. But in my personal experience, I found that gathering all route config in one single file is much easier for new comers / looking back into an old project to get all the routes.
+## Put router config in one file
+
+`react-router@4` enables us to write routes in a very flexible way. It unlocks the power of extremely modular way to do routing. But in my personal experience, I found that gathering all route config in one single file is much easier for new comers / looking back into an old project to get all the routes.
 
 ```js
 export default () => (
@@ -208,14 +210,16 @@ export default () => (
 
 In such way it's crystal clear that what feature is enabled in the application.
 
-## Resources
+## Generalize restful http calls with resources
 
-GraphQL is already out there for a while. I think up to this moment, if you are building an application from scratch, you should strongly consider use graphQL as the server/frontend interface.
-However, not all applications have this luxury of using graphQL, most of the legacy projects still need to utilise good old restful API.
+GraphQL is already out there for a while. I think up to this moment, if you are building an application **from scratch**, I strongly recommend **using GraphQL** as the server/frontend interface.
+
+However, not all applications have this luxury of using GraphQL, most of the legacy projects still need to utilise good old restful API.
+
 So if your restful API has some consistent convention, it'll be best to find a way to generalise it.
 90% of the cases, typical request goes through those steps
 
-1. resource request (from componentDidMountor handleClick etc.)
+1. resource request (from `componentDidMount`, `useEffect`, `handleClick` etc.)
 2. start loading
 3. make the request
 4. display a toast message (success / failure)
@@ -228,7 +232,7 @@ We could see that step 1, 2, 4, 6, 7 clearly needs an action attached to them.
 
 Therefore i invented this concept called resources to systematically handle those common actions.
 
-First i will create a file named constant/Resources.js , I will give each resource a name. But as we could see, each resource actually have at least 5 actions related. Here comes a very small yet handy utility: makeResource .
+First i will create a file named `constant/Resources.js` , I will give each resource a name. But as we could see, each resource actually have at least 5 actions related. Here comes a very small yet handy utility: makeResource .
 
 ```js
 export default function makeResource(resource, opts = '') {
@@ -382,6 +386,7 @@ export function createResourceReducer(resource, extension) {
 ```
 
 In reality, the API that responses data could be quite different, so a very flexible and pluggable reducer is needed here.
+
 In components, upon dispatching a request, you just simply do this.
 
 ```js
@@ -393,12 +398,14 @@ connect(null, {
 })(YourComponent)
 ```
 
-this vastly simplified the tedious job to have a dedicated action type for FETCH_ORDER_REQUEST and attach an useless action fetchOrderRequestfor it.
+this vastly simplified the tedious job to have a dedicated action type for `FETCH_ORDER_REQUEST` and attach an useless action `fetchOrderRequest` for it.
 
-## redux-saga
+## Control the flow using redux-saga
 
-we have covered the content resource in the previous section. It seems like the we need a tool to control the call sequence and centralised management of it. Therefore we need redux-saga
+we have covered the content resource in the previous section. It seems like the we need a tool to control the call sequence and centralize the management of it. Therefore we need redux-saga
+
 With the powerful resource concept, the flow we mentioned above is really easy
+
 
 ```js
 import { put, call, fork } from 'redux-saga/effects'
@@ -413,12 +420,13 @@ import { apiClient } from 'app/utils/network'
 export function* fetchOrder() {
   yield put(startLoading(ORDER))
 
-  const { error, payload } = yield call(apiClient, {
-    method: 'GET',
-    url: '/api/order/' + action.payload.id,
-  })
-
-  if (error) {
+  try {
+    const response = yield call(apiClient, {
+      method: 'GET',
+      url: '/api/order/' + action.payload.id,
+    })
+    yield put(fetch.done(ORDER)(payload.data))
+  } catch (error) {
     yield put(
       addMessage({
         style: 'danger',
@@ -426,8 +434,6 @@ export function* fetchOrder() {
         details: payload.details,
       })
     )
-  } else {
-    yield put(fetch.done(ORDER)(payload.data))
   }
 
   yield put(endLoading(ORDER))
@@ -442,7 +448,8 @@ loud and clear
 
 ## redux-form
 
-When it comes to form, usually it's very complicated using react. However, redux-form ease the pain.
+When it comes to form, usually it's very complicated with React. However, redux-form ease the pain.
+
 here is a complete example of how a form could be handled together with redux-form. I won't be going through the details in redux-form usages
 
 ```jsx
@@ -519,7 +526,7 @@ class AccountProfileForm extends PureComponent {
   }
 }
 
-const initialValues = user => ({
+const getInitialValues = user => ({
   name: user.name,
   email: user.email,
 })
@@ -531,7 +538,7 @@ const transformPayload = formData => ({
 
 const mapStatesToProps = state => ({
   isLoading: isLoading(state, USER),
-  initialValues: initialValues(getResource(state, USER)),
+  initialValues: getInitialValues(getResource(state, USER)),
 })
 
 const mapDispatchToProps = {
@@ -550,33 +557,151 @@ export default connect(
 )
 ```
 
-## url-based state
+A few concepts to highlight
 
-1. usually when an action is taken, we need to display some intermediate UI element to let the user perform some actions. We found that for cases like
-   open /close modal
+1. use `enableReinitialize` is a power flag empowers async data workflow. e.g. for those forms needs to be edited by user, you could use this option to hydrate data into the form
+2. `getInitialValues` is a common function I usually use for transforming the raw API response to what the form needs. In some cases, we may need to map raw API response to our frontend form like `name` -> `firstName` + `lastName`
+3. `transformPayload` is a common function I usually make for transforming the form value to what we need to post back to API. It allows us to opt in other hidden / inferred values. e.g. `firstName` + `lastName` -> `name`.
+4. try to make validation functions as atom as possible, most of the times you could do a chain of validations like `[required, minLength(50), maxLength(250)]`
+5. try to build a HoC like `gridFormGroup` to consolidate error messages, hints, horizontal form layout etc, see below
+
+### gridFormGroup HoC
+
+```jsx
+export default function gridFormGroup(
+  ReduxFormField, 
+  grid = { 
+    label: {sm: 3}, 
+    input: {sm: 9}, 
+    help: {smOffset: 3, sm: 9},
+) {
+  class ReduxFormGroup extends PureComponent {
+    render() {
+      const {
+        input,
+        meta,
+        label,
+        info,
+        ...rest
+      } = this.props;
+
+      const { touched, error } = meta;
+      const displayError = touched && error;
+
+      const errorMessage = error && error.size ? error.join(' ') : error;
+
+      return (
+        <FormGroup
+          {...formGroupProps}
+          controlId={input.name}
+          validationState={displayError ? 'error' : null}
+        >
+          <Col
+            as={ControlLabel}
+            {...grid.label}
+          >
+            {label}
+          </Col>
+          <Col {...grid.input}>
+            <ReduxFormField
+              input={input}
+              meta={meta}
+              {...rest}
+            />
+          </Col>
+          {displayError && <Col {...grid.help}><HelpBlock variant="error">{errorMessage}</HelpBlock></Col>}
+          {info && <Col {...grid.help}><HelpBlock>{info}</HelpBlock></Col>}
+        </FormGroup>
+      );
+    }
+  }
+
+  return ReduxFormGroup;
+}
+```
+
+## Use URL to control state as much as possible
+
+when an action is taken, we need to display some intermediate UI element to let the user perform some actions. We found that for cases like
+
+1. open /close modal
 2. tab change
 3. filter change in a list page
 
 it will be the best to purely use URL to control them
 
+### For a modal
+
 ```jsx
-export default () => (
-  <Route path="/orders/:id/delete" exact>
-    {({ match }) => (
-      <DeleteOrderModal
-        show={Boolean(match)}
-        connection={{ id: match && match.params && match.params.id }}
-      />
-    )}
-  </Route>
-)
+<Route path="/orders/:id/delete" exact>
+  {({ match }) => (
+    <DeleteOrderModal
+      show={Boolean(match)}
+      connection={{ id: match && match.params && match.params.id }}
+    />
+  )}
+</Route>
+<Button danger to={`/orders/${orders.id}/delete`}>Delete Order</Button>
 ```
 
 In such case, to open the modal, you just point the user to specific route, no hassle at all, and it's completely under control
 
-## store management
+### For Tabs
 
-with all of the concept and tips above, actually we have made our store very clean… normally the store will look like this
+```jsx
+// in route.jsx
+<Route path="/settings/profile" exact component={ProfileSettingsPage} />
+<Route path="/settings/notifications" exact component={NotificationsSettingsPage} />
+// in settings page
+<Tabs>
+  <Route path="/settings/profile" exact>
+    {(match) => 
+      <Tab active={!!match} to="/settings/profile">Profile</Tab>
+    }
+   </Route>
+  <Route path="/settings/notifications" exact>
+    {(match) => 
+      <Tab active={!!match} to="/settings/notifications">Notifications</Tab>
+    }
+  </Route>
+</Tabs>
+```
+
+### For Filters
+
+```jsx
+// in route.jsx
+<Route path="/orders" exact component={OrdersPage} />
+// in OrdersPage.jsx
+class OrdersPage {
+  componentDidUpdate() {
+    const query = querystring.parse(this.props.location.search.slice(1));
+    this.fetchOrders({
+      page: query.page,
+    })
+  }
+
+  handlePageChange = (page) => {
+    this.props.history.push(`/orders?page=${page}`);
+  }
+  
+  render() {
+    const query = querystring.parse(this.props.location.search.slice(1));
+    const page = query.page || 0;
+    return <Orders currentPage={page} onPageChange={this.handlePageChange} />
+  }
+}
+```
+
+So when you need to change filter / pagination, you route will change from `/orders` to `/orders?page=2`, and you could catch that change in the `componentDidUpdate` lifecycle hook and refetch it based on the route change.
+
+one big pro for this approach is that you get `go back` action in browser for free! imagine that you are building an e-commerce app, when user goes inside into the details of the order and wants to update some order details, he / she may just click `go back` on browser without intention to lose the previous filters, control those filter state on route suites perfectly into this situation.
+
+Another pro is by using URL to control filters, even if the user refreshes the browser, he / she won't loose the selected statuses
+
+## control # of root reducers
+
+with all of the concept and tips above, actually we have made our store very clean normally the store will look like this
 
 ```js
 export default combineReducers({
@@ -587,3 +712,11 @@ export default combineReducers({
   resources,
 })
 ```
+
+1. all http request / response are squashed to the `resources` namespace
+2. displaying loading or not could be purely controlled by the `loadings` reducer
+3. `messages` will be used to show / hide toast messages / error message on the page
+4. router, usually with aid of `connected-react-router` we could bind redux state with actually router
+5. `form` is controlled by redux-form
+
+Limiting # of root reducers helps your to tidy up the store in a much cleaner way, rather than putting 100 keys at the root, when you get the redux-state tree, you always know where to find what.
