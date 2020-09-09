@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'gatsby'
-import logo from '../images/logo.png'
+import logo from '../assets/logo.png'
 
 const Header = ({ siteTitle }) => {
   const [isOpen, setOpen] = useState(false)
@@ -41,6 +41,9 @@ const Header = ({ siteTitle }) => {
 
         <div className={`navbar-menu is-dark ${isOpen ? 'is-active' : ''}`}>
           <div className="navbar-end">
+            <a href="/resume.pdf" className="navbar-item">
+              Resume
+            </a>
             <Link to="/blogs" className="navbar-item">
               Blogs
             </Link>
