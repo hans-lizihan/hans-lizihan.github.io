@@ -8,7 +8,7 @@ There are already quite a lot of medium tutorials teaching people out there for 
 [dva](https://dvajs.com/) is really nice, I loved the concept of it so much, It reminds me of ruby on rails a few years ago. However, besides the great benefits full-featured store management libraries could provide us, it has it's own shorthands as well.
 
 1. libs like [dva](https://dvajs.com/) is a bit **over-encapsulated**. so new joiner hardly know how does this magically work unless he/she spend quite sometime doing todo-lists following another tutorial.
-2. **Modularity design is not straight forward**. e.g. user as a module, orders as a module etc. It seems very ideal, you could even do code splitting by doing this, and only load necessary reducers / sagas whenever necessary. But in the end module-module will become a headache.
+2. **Modularity design is not straight forward**. e.g. user as a module, orders as a module etc. It seems very ideal, you could even do code splitting by doing this, and only load necessary reducers / sagas whenever necessary. But in the end module-module communication/dependencies will become a headache.
 3. **Modularity design does not fit "page centric" designs**. It turns out that in medium sized application, people are more focused on "What will this page do" rather than "what will this chunk of section in the page will do".
 4. **Cannot find a way to integrate with other popular libraries**. e.g. redux-form
 
@@ -716,7 +716,7 @@ export default combineReducers({
 1. all http request / response are squashed to the `resources` namespace
 2. displaying loading or not could be purely controlled by the `loadings` reducer
 3. `messages` will be used to show / hide toast messages / error message on the page
-4. router, usually with aid of `connected-react-router` we could bind redux state with actually router
+4. `router`, usually with aid of `connected-react-router` we could bind redux state with actually router
 5. `form` is controlled by redux-form
 
 Limiting # of root reducers helps your to tidy up the store in a much cleaner way, rather than putting 100 keys at the root, when you get the redux-state tree, you always know where to find what.

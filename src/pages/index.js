@@ -8,6 +8,7 @@ import ibmlogo from '../assets/ibmlogo.png'
 import vslogo from '../assets/vslogo.png'
 import aslogo from '../assets/aslogo.png'
 import neatlogo from '../assets/neatlogo.jpg'
+import cmuLogo from '../assets/cmuLogo.png'
 import fbavatar from '../assets/fbavatar.jpg'
 import SEO from '../components/SEO'
 import Icon from '../components/Icon'
@@ -237,7 +238,9 @@ const IndexPage = () => (
         <div className="timeline is-centered">
           <div className="timeline-item">
             <div className="timeline-marker is-image is-48x48">
-              <img src={bulogo} alt="HKBU Logo" />
+              <a href="https://hkbu.edu.hk">
+                <img src={bulogo} alt="HKBU Logo" />
+              </a>
             </div>
             <div className="timeline-content">
               <p className="heading">Sep 2011</p>
@@ -248,7 +251,9 @@ const IndexPage = () => (
           </div>
           <div className="timeline-item">
             <div className="timeline-marker is-image is-48x48">
-              <img src={liulogo} alt="Linkoping University" />
+              <a href="https://liu.se/">
+                <img src={liulogo} alt="Linkoping University" />
+              </a>
             </div>
             <div className="timeline-content">
               <p className="heading">Sep 2013 - Jan 2014</p>
@@ -257,7 +262,9 @@ const IndexPage = () => (
           </div>
           <div className="timeline-item">
             <div className="timeline-marker is-image is-48x48">
-              <img src={ibmlogo} alt="IBM" />
+              <a href="https://www.ibm.com/">
+                <img src={ibmlogo} alt="IBM" />
+              </a>
             </div>
             <div className="timeline-content">
               <p className="heading">June 2014 - Oct 2014</p>
@@ -266,7 +273,9 @@ const IndexPage = () => (
           </div>
           <div className="timeline-item">
             <div className="timeline-marker is-image is-48x48">
-              <img src={vslogo} alt="venture solutions" />
+              <a href="https://www.venture-solutions.com/">
+                <img src={vslogo} alt="venture solutions" />
+              </a>
             </div>
             <div className="timeline-content">
               <p className="heading">Oct 2014 - May 2015</p>
@@ -284,7 +293,9 @@ const IndexPage = () => (
           </div>
           <div className="timeline-item is-warning">
             <div className="timeline-marker is-warning is-image is-48x48">
-              <img src={aslogo} alt="aftership" />
+              <a href="https://www.aftership.com/">
+                <img src={aslogo} alt="aftership" />
+              </a>
             </div>
             <div className="timeline-content">
               <p className="heading">July 2016</p>
@@ -293,11 +304,24 @@ const IndexPage = () => (
           </div>
           <div className="timeline-item">
             <div className="timeline-marker is-image is-48x48">
-              <img src={neatlogo} alt="neat" />
+              <a href="https://www.neatcommerce.com/">
+                <img src={neatlogo} alt="neat" />
+              </a>
             </div>
             <div className="timeline-content">
-              <p className="heading">Oct 2018 - Current</p>
+              <p className="heading">Oct 2018 - Aug 2020</p>
               <p>Fullstack Software Engineer, Neat Ltd</p>
+            </div>
+          </div>
+          <div className="timeline-item">
+            <div className="timeline-marker is-image is-48x48">
+              <a href="https://www.cmu.edu/">
+                <img src={cmuLogo} alt="CMU" />
+              </a>
+            </div>
+            <div className="timeline-content">
+              <p className="heading">Sep 2020 - Current</p>
+              <p>MS Software Engineer</p>
             </div>
           </div>
         </div>
