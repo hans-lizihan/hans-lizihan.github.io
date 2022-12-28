@@ -3,11 +3,11 @@ import { Link } from 'gatsby'
 import { graphql } from 'gatsby'
 
 import Layout from '../components/Layout'
-import SEO from '../components/SEO'
+import Seo from '../components/Seo'
 
 const Blogs = ({ data }) => (
   <Layout>
-    <SEO title="Page two" />
+    <Seo title="Page two" />
     <div className="hero">
       <div className="hero-body">
         <div className="container">
@@ -46,7 +46,7 @@ const Blogs = ({ data }) => (
 
 export const query = graphql`
   query {
-    allMarkdownRemark(sort: { fields: frontmatter___date, order: DESC }) {
+    allMarkdownRemark(sort: {frontmatter: {date: DESC}}) {
       totalCount
       edges {
         node {

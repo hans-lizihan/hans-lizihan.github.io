@@ -11,4 +11,6 @@ import { faGraduationCap } from '@fortawesome/free-solid-svg-icons'
 
 library.add(faTwitter, faFacebook, faLinkedin, faGithub, faGraduationCap)
 
-export default ({ icon, ...rest }) => <FontAwesomeIcon icon={icon} {...rest} />
+const Icon = ({ icon, ...rest }) => <FontAwesomeIcon icon={icon} {...rest} />
+
+export default Icon;

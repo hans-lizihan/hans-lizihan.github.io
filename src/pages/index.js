@@ -9,14 +9,15 @@ import vslogo from '../assets/vslogo.png'
 import aslogo from '../assets/aslogo.png'
 import neatlogo from '../assets/neatlogo.jpg'
 import cmuLogo from '../assets/cmuLogo.png'
+import mixpanelLogo from '../assets/mixpanelLogo.png'
 import fbavatar from '../assets/fbavatar.jpg'
-import SEO from '../components/SEO'
+import Seo from '../components/Seo'
 import Icon from '../components/Icon'
-import Particles from 'react-particles-js'
+import Particles from "react-tsparticles";
 
 const IndexPage = () => (
   <Layout>
-    <SEO title="Home" />
+    <Seo title="Home" />
     <section className="hero is-medium is-dark is-relative">
       <Particles
         style={{
@@ -299,7 +300,7 @@ const IndexPage = () => (
             </div>
             <div className="timeline-content">
               <p className="heading">July 2016</p>
-              <p>Software Engineer, AfterShip Ltd.</p>
+              <p>Senior Software Engineer, AfterShip Ltd.</p>
             </div>
           </div>
           <div className="timeline-item">
@@ -310,7 +311,7 @@ const IndexPage = () => (
             </div>
             <div className="timeline-content">
               <p className="heading">Oct 2018 - Aug 2020</p>
-              <p>Fullstack Software Engineer, Neat Ltd</p>
+              <p>Senior Fullstack Software Engineer, Neat Ltd</p>
             </div>
           </div>
           <div className="timeline-item">
@@ -320,8 +321,19 @@ const IndexPage = () => (
               </a>
             </div>
             <div className="timeline-content">
-              <p className="heading">Sep 2020 - Current</p>
+              <p className="heading">Sep 2020 - Dec 2021</p>
               <p>MS Software Engineer</p>
+            </div>
+          </div>
+          <div className="timeline-item">
+            <div className="timeline-marker is-image is-48x48">
+              <a href="https://www.mixpanel.com">
+                <img src={mixpanelLogo} alt="mixpanel" />
+              </a>
+            </div>
+            <div className="timeline-content">
+              <p className="heading">Jan 2022 - Current</p>
+              <p>Sr. Software Engineer</p>
             </div>
           </div>
         </div>
