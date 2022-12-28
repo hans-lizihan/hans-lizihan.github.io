@@ -13,4 +13,4 @@ library.add(faTwitter, faFacebook, faLinkedin, faGithub, faGraduationCap)
 
 const Icon = ({ icon, ...rest }) => <FontAwesomeIcon icon={icon} {...rest} />
 
-export default Icon;
+export default Icon

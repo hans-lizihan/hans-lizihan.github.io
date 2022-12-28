@@ -93,7 +93,7 @@ this is a more recommended way to iterate a collection (or iterable to be precis
 // array = [1,2,3,4]
 function sum(array) {
   let result = 0
-  array.forEach(number => (result += number))
+  array.forEach((number) => (result += number))
   return result
 }
 ```
@@ -264,11 +264,7 @@ Here will introduce the killer feature of `lodash` - chainable api
 it is basically implemented using `_.chain(collection)` method, or `_(collection)` as a shorthand, and could be optimized easily
 
 ```javascript
-const result = _(source)
-  .map(func1)
-  .map(func2)
-  .map(func3)
-  .value()
+const result = _(source).map(func1).map(func2).map(func3).value()
 ```
 
 is transformed to something like following in normal mode.
@@ -310,10 +306,7 @@ as you could see, `O(kn)` algorithm has been optimized to `O(n)`. With pure `for
 ```javascript
 // ['tag1', 'tag2  ', 'tag1 '] -> ['tag1', 'tag2']
 function clean(tags) {
-  return _(tags)
-    .map(_.trim)
-    .uniq()
-    .value()
+  return _(tags).map(_.trim).uniq().value()
 }
 ```
 
@@ -492,7 +485,7 @@ indentation level `-1`, current `2`
 ```javascript
 function filterAcl(acl_hash) {
   let filtered_api_acl = {}
-  Object.keys(acl_hash).forEach(api_version => {
+  Object.keys(acl_hash).forEach((api_version) => {
     if (!config.api_key.default_user_api_acl[api_version]) {
       // 2
       return
@@ -521,9 +514,9 @@ indentation level `-2`, current `0`
 ```javascript
 function filterAcl(acl_hash) {
   return _.chain(Object.keys(acl_hash))
-    .filter(api_version => config.api_key.default_user_api_acl[api_version])
-    .filter(api_version => Array.isArray(acl_hash[api_version]))
-    .map(api_version => [
+    .filter((api_version) => config.api_key.default_user_api_acl[api_version])
+    .filter((api_version) => Array.isArray(acl_hash[api_version]))
+    .map((api_version) => [
       api_version,
       _.intersection(
         config.api_key.default_user_api_acl,

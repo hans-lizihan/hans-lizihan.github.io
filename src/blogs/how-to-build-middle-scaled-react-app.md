@@ -16,7 +16,7 @@ There are already quite a lot of medium tutorials teaching people out there for 
 
 We could use all small pieces of react ecosystem to build the suitable framework of our own! The process is super hard, but finally I have found a way to keep everything under control.
 
-## TL;DR; 
+## TL;DR;
 
 1. Use **sock drawer** design rather than modular design for your store and folder structure
 2. Use **pages** folder to control pages and one time components
@@ -297,47 +297,47 @@ const ORDERS = makeResource('order', 'CRUD')
 next, we need to have a suite of generic actions that will accept those special constants
 
 ```js
-export const update = resource => payload => ({
+export const update = (resource) => (payload) => ({
   type: resource.UPDATE_REQUEST,
   payload,
 })
 
-update.done = resource => payload => ({
+update.done = (resource) => (payload) => ({
   type: resource.UPDATE_DONE,
   payload,
 })
 
-export const create = resource => payload => ({
+export const create = (resource) => (payload) => ({
   type: resource.CREATE_REQUEST,
   payload,
 })
 
-create.done = resource => payload => ({
+create.done = (resource) => (payload) => ({
   type: resource.CREATE_DONE,
   payload,
 })
 
-export const remove = resource => payload => ({
+export const remove = (resource) => (payload) => ({
   type: resource.DELETE_REQUEST,
   payload,
 })
 
-remove.done = resource => payload => ({
+remove.done = (resource) => (payload) => ({
   type: resource.DELETE_DONE,
   payload,
 })
 
-export const fetch = resource => payload => ({
+export const fetch = (resource) => (payload) => ({
   type: resource.FETCH_REQUEST,
   payload,
 })
 
-fetch.done = resource => payload => ({
+fetch.done = (resource) => (payload) => ({
   type: resource.FETCH_DONE,
   payload,
 })
 
-export const clear = resource => () => ({
+export const clear = (resource) => () => ({
   type: resource.CLEAR,
 })
 ```
@@ -406,7 +406,6 @@ we have covered the content resource in the previous section. It seems like the 
 
 With the powerful resource concept, the flow we mentioned above is really easy
 
-
 ```js
 import { put, call, fork } from 'redux-saga/effects'
 import { takeLatest } from 'redux-saga'
@@ -439,7 +438,7 @@ export function* fetchOrder() {
   yield put(endLoading(ORDER))
 }
 
-export default function*() {
+export default function* () {
   yield fork(takeLatest, ORDER.FETCH_REQUEST, fetchOrder)
 }
 ```
@@ -526,23 +525,23 @@ class AccountProfileForm extends PureComponent {
   }
 }
 
-const getInitialValues = user => ({
+const getInitialValues = (user) => ({
   name: user.name,
   email: user.email,
 })
 
-const transformPayload = formData => ({
+const transformPayload = (formData) => ({
   name: formData.name,
   email: formData.email,
 })
 
-const mapStatesToProps = state => ({
+const mapStatesToProps = (state) => ({
   isLoading: isLoading(state, USER),
   initialValues: getInitialValues(getResource(state, USER)),
 })
 
 const mapDispatchToProps = {
-  onSubmit: formData => update(USER)(transformPayload(formData)),
+  onSubmit: (formData) => update(USER)(transformPayload(formData)),
   fetchUser: fetch(USER),
 }
 
@@ -569,10 +568,10 @@ A few concepts to highlight
 
 ```jsx
 export default function gridFormGroup(
-  ReduxFormField, 
-  grid = { 
-    label: {sm: 3}, 
-    input: {sm: 9}, 
+  ReduxFormField,
+  grid = {
+    label: {sm: 3},
+    input: {sm: 9},
     help: {smOffset: 3, sm: 9},
 ) {
   class ReduxFormGroup extends PureComponent {
@@ -655,12 +654,12 @@ In such case, to open the modal, you just point the user to specific route, no h
 // in settings page
 <Tabs>
   <Route path="/settings/profile" exact>
-    {(match) => 
+    {(match) =>
       <Tab active={!!match} to="/settings/profile">Profile</Tab>
     }
    </Route>
   <Route path="/settings/notifications" exact>
-    {(match) => 
+    {(match) =>
       <Tab active={!!match} to="/settings/notifications">Notifications</Tab>
     }
   </Route>
@@ -671,23 +670,23 @@ In such case, to open the modal, you just point the user to specific route, no h
 
 ```jsx
 // in route.jsx
-<Route path="/orders" exact component={OrdersPage} />
+;<Route path="/orders" exact component={OrdersPage} />
 // in OrdersPage.jsx
 class OrdersPage {
   componentDidUpdate() {
-    const query = querystring.parse(this.props.location.search.slice(1));
+    const query = querystring.parse(this.props.location.search.slice(1))
     this.fetchOrders({
       page: query.page,
     })
   }
 
   handlePageChange = (page) => {
-    this.props.history.push(`/orders?page=${page}`);
+    this.props.history.push(`/orders?page=${page}`)
   }
-  
+
   render() {
-    const query = querystring.parse(this.props.location.search.slice(1));
-    const page = query.page || 0;
+    const query = querystring.parse(this.props.location.search.slice(1))
+    const page = query.page || 0
     return <Orders currentPage={page} onPageChange={this.handlePageChange} />
   }
 }

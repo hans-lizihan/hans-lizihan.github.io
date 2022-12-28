@@ -26,7 +26,7 @@ const Blogs = ({ data }) => (
                         {'  '}
                         <time
                           className="subtitle"
-                          datetime={node.frontmatter.date}
+                          dateTime={node.frontmatter.date}
                         >
                           {node.frontmatter.date}
                         </time>
@@ -46,7 +46,7 @@ const Blogs = ({ data }) => (
 
 export const query = graphql`
   query {
-    allMarkdownRemark(sort: {frontmatter: {date: DESC}}) {
+    allMarkdownRemark(sort: { frontmatter: { date: DESC } }) {
       totalCount
       edges {
         node {

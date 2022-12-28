@@ -28,7 +28,7 @@ const Header = ({ siteTitle }) => {
             className={`navbar-burger ${isOpen ? 'is-active' : ''}`}
             aria-label="menu"
             aria-expanded="false"
-            onClick={e => {
+            onClick={(e) => {
               e.preventDefault()
               setOpen(!isOpen)
             }}
